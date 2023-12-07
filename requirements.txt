@@ -1,0 +1,10 @@
+tensorboard
+tensorboardX
+xformers
+bitsandbytes
+transformers
+accelerate
+compel
+diffusers @ git+https://github.com/huggingface/diffusers.git
+typer[all]==0.9.0
+rich
