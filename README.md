@@ -23,6 +23,42 @@ rich==12.5.1
 compel==2.0.2
 ```
 
+## CLI
+
+```
+❯ python main.py dreambooth --help                                                 
+ Usage: main.py dreambooth [OPTIONS]                                                                                                                                                          
+                                                                                                                                                                                              
+ Fine Tune Stable Diffusion with LoRA and DreamBooth                                                                                                                                          
+                                                                                                                                                                                              
+╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --input-images-dir                                     TEXT            Path to folder containing training data [default: None] [required]                                               │
+│ *  --instance-prompt                                      TEXT            The prompt with identifier specifying the instance, e.g. 'a photo of a ohwx man', 'a photo of a TOK man wearing  │
+│                                                                           casual clothes, smiling'                                                                                         │
+│                                                                           [default: None]                                                                                                  │
+│                                                                           [required]                                                                                                       │
+│    --base-model                                           TEXT            Base Model to train Dreambooth on [default: stabilityai/stable-diffusion-xl-base-1.0]                            │
+│    --pretrained-vae                                       TEXT            VAE model with better numerical stability [default: madebyollin/sdxl-vae-fp16-fix]                               │
+│    --resolution                                           INTEGER         The resolution for input images, all the images will be resized to this [default: 1024]                          │
+│    --train-batch-size                                     INTEGER         Batch Size (per device) for training [default: 1]                                                                │
+│    --max-train-steps                                      INTEGER         Total number of training steps to run for, more your images, more should be this value [default: 500]            │
+│    --gradient-accumulation-steps                          INTEGER         Number of update steps to accumulate before performing a backward pass [default: 1]                              │
+│    --learning-rate                                        FLOAT           Initial learning rate for training, after warmup period [default: 0.0001]                                        │
+│    --use-8bit-adam                  --no-use-8bit-adam                    Whether or not to use 8-bit Adam from bitsandbytes. Ignored if optimizer is not set to AdamW                     │
+│                                                                           [default: no-use-8bit-adam]                                                                                      │
+│    --use-tf32                       --no-use-tf32                         Whether or not to allow TF32 on Ampere GPUs. Can be used to speed up training. [default: no-use-tf32]            │
+│    --mixed-precision                                      [no|fp16|bf16]  Whether to use mixed precision. Choose between fp16 and bf16 (bfloat16). Bf16 requires PyTorch >=1.10.and an     │
+│                                                                           Nvidia Ampere GPU.  Default to the value of accelerate config of the current system or the flag passed with the  │
+│                                                                           `accelerate.launch` command. Use this argument to override the accelerate config.                                │
+│                                                                           [default: MixedPrecisionType.no]                                                                                 │
+│    --lora-rank                                            INTEGER         The dimension of the LoRA update matrices [default: 4]                                                           │
+│    --output-dir                                           TEXT            The output directory to store the logs, model predictions, checkpoints and final lora model weights              │
+│                                                                           [default: lora-dreambooth-model]                                                                                 │
+│    --help                                                                 Show this message and exit.                                                                                      │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+```
+
 ## 🔥 Fine Tune
 
 ```
