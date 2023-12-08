@@ -7,6 +7,18 @@ black .
 isort .
 ```
 
+Tested on Python `3.9.12`
+
+Make sure to `pip uninstall peft`
+
+## Setup
+
+```
+git clone https://github.com/satyajitghana/sdxl-dreambooth-finetune
+cd sdxl-dreambooth-finetune
+```
+
+
 ```
 pip install -r requirements.txt
 ```
