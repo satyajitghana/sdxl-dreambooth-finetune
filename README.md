@@ -2,6 +2,8 @@
 
 On a A10G/RTX3090
 
+This was created as a part of course of EMLO3.0 (Extensive MLOps) from The School Of AI https://theschoolof.ai/
+
 ## 🧪 Development
 
 ```
