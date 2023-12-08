@@ -1,4 +1,6 @@
-# SDXL - LoRA - DreamBooth
+# SDXL - LoRA - DreamBooth in just 10 mins!
+
+On a A10G/RTX3090
 
 ## 🧪 Development
 
