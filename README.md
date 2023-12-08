@@ -225,12 +225,12 @@ Finetuned LoRA combined with `nerijs/pixel-art-xl`
 
 ![suit-pixel-lora-2](assets/pixel/suit-pixel-2.png)
 
-## Stable Diffusion Video Output
+## Stable Video Diffusion Output
 
 SDXL Generated Image
 
 ![dog](assets/sdv/dog.jpeg)
 
-SD Video
+SVD Output
 
 ![dog-video](assets/sdv/dog-sdv.gif)
