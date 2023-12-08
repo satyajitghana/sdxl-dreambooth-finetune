@@ -13,15 +13,46 @@ Make sure to `pip uninstall peft`
 
 ## Setup
 
+Clone this repo
+
 ```
 git clone https://github.com/satyajitghana/sdxl-dreambooth-finetune
 cd sdxl-dreambooth-finetune
 ```
 
+Install Dependencies
 
 ```
 pip install -r requirements.txt
 ```
+
+Configure Accelerate
+
+```
+accelerate config
+```
+
+Here's how my accelerate config looks like
+
+```
+compute_environment: LOCAL_MACHINE
+debug: false
+distributed_type: 'NO'
+downcast_bf16: 'no'
+gpu_ids: all
+machine_rank: 0
+main_training_function: main
+mixed_precision: fp16
+num_machines: 1
+num_processes: 1
+rdzv_backend: static
+same_network: true
+tpu_env: []
+tpu_use_cluster: false
+tpu_use_sudo: false
+use_cpu: false
+```
+
 
 Tested with
 
@@ -35,7 +66,7 @@ rich==12.5.1
 compel==2.0.2
 ```
 
-## CLI
+## CLI Usage
 
 ```
 ❯ python main.py dreambooth --help                                                 
@@ -72,6 +103,12 @@ compel==2.0.2
 ```
 
 ## 🔥 Fine Tune
+
+Create a folder inside data folder, and put all your images, make sure your images are square crops, and the images should focus only on the subject, take different photos with different background and clothes for better results
+
+Then start fine tuning!
+
+NOTE: It's comfortable to train on a 24GB VRAM Graphic Card, but it can also be done on Colab with just 16GB VRAM, you'll need to use 8bit adam and xformers, 8bit is supported in this repo but xformers not yet.
 
 ```
 accelerate launch main.py dreambooth --input-images-dir ./data/tresa-truck --instance-prompt "a photo of a ohwx truck" --resolution 512 --train-batch-size 1 --max-train-steps 1000 --mixed-precision fp16 --output-dir ./output/tresa-truck
