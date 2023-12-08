@@ -103,6 +103,62 @@ Steps 100% ━━━━━━━━━━━━━━━━━━━━━━━
 python main.py infer --prompt "a photo of a ohwx truck in a jungle" --lora-weights ./output/tresa-truck --output-dir output/infer-truck
 ```
 
+## 🎭 Combining LoRA
+
+```
+from diffusers import DiffusionPipeline
+from compel import Compel, ReturnedEmbeddingsType
+import torch
+from PIL import Image
+
+def image_grid(imgs, rows, cols, resize=256):
+    assert len(imgs) == rows * cols
+
+    if resize is not None:
+        imgs = [img.resize((resize, resize)) for img in imgs]
+    w, h = imgs[0].size
+    grid = Image.new("RGB", size=(cols * w, rows * h))
+    grid_w, grid_h = grid.size
+
+    for i, img in enumerate(imgs):
+        grid.paste(img, box=(i % cols * w, i // cols * h))
+    return grid
+
+pipe = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16)
+pipe = pipe.to("cuda")
+
+pipe.load_lora_weights("./pytorch_lora_weights_satyajit_v1.safetensors", adapter_name="satyajit")
+
+pipe.load_lora_weights("nerijs/pixel-art-xl", weight_name="pixel-art-xl.safetensors", adapter_name="pixel")
+
+pipe.set_adapters(["satyajit", "pixel"], adapter_weights=[0.8, 0.7])
+
+compel = Compel(
+  tokenizer=[pipe.tokenizer, pipe.tokenizer_2] ,
+  text_encoder=[pipe.text_encoder, pipe.text_encoder_2],
+  returned_embeddings_type=ReturnedEmbeddingsType.PENULTIMATE_HIDDEN_STATES_NON_NORMALIZED,
+  requires_pooled=[False, True]
+)
+
+prompt = "portrait of (ohwx man)1.6, wearing an expensive suit, (pixel art)1.5"
+
+conditioning, pooled = compel([prompt] * 4)
+
+images = pipe(
+    prompt_embeds=conditioning,
+    pooled_prompt_embeds=pooled,
+    num_inference_steps=25,
+    cross_attention_kwargs={"scale": 1.0},
+).images
+
+g = image_grid(images, rows=2, cols=2)
+
+g.save("out.png")
+
+for idx, image in enumerate(images):
+    image.save(f"out_{idx}.png")
+```
+
 ## 😁 Outputs
 
 ![pharaoh](assets/pharaoh.png)
@@ -119,6 +175,16 @@ python main.py infer --prompt "a photo of a ohwx truck in a jungle" --lora-weigh
 
 ![astro](assets/astro.JPG)
 
+
+## Output of Combining LoRA
+
+Finetuned LoRA combined with `nerijs/pixel-art-xl` 
+
+![suit-pixel-lora](assets/pixel/suit-pixel.png)
+
+![suit-pixel-lora-1](assets/pixel/suit-pixel-1.png)
+
+![suit-pixel-lora-2](assets/pixel/suit-pixel-2.png)
 
 ## Stable Diffusion Video Output
 
