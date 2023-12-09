@@ -216,6 +216,16 @@ for idx, image in enumerate(images):
 
 ![astro](assets/astro.JPG)
 
+```python
+python main.py infer \
+    --prompt "photo of ohwx man as an rich (egyptian pharaoh)1.3, pyramids in the background, closeup shot, bokeh, 80mm lens, 8k" \
+    --lora-weights "/home/ubuntu/satyajit-sdxl/pytorch_lora_weights_satyajit_v1.safetensors" \
+    --output-dir output/satyajit
+```
+
+![image](https://github.com/satyajitghana/sdxl-dreambooth-finetune/assets/8092481/97658eb6-f023-4e2c-a20c-eb4f73d36f92)
+
+
 
 ## Output of Combining LoRA
 
